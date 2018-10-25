@@ -5,11 +5,11 @@ var chooseBlock = document.getElementById('choose');
 var playButton = document.getElementById('play');
 var tableGame =    [[0, 0, 0, 0, 0, 0, 0],
 					[0, 0, 0, 0, 0, 0, 0],
-					[0, 0, 0, 0, 0, 0, 0],
-					[0, 0, 0, 1, 0, 0, 0],
-					[0, 0, 0, 0, 0, 0, 0],
-					[0, 2, 0, 0, 0, 0, 0],
-					[0, 0, 0, 0, 1, 0, 0]];
+					[0, 0, 1, 0, 0, 0, 0],
+					[0, 0, 1, 0, 0, 0, 0],
+					[0, 0, 1, 0, 0, 0, 0],
+					[0, 0, 1, 0, 0, 0, 0],
+					[0, 0, 0, 0, 0, 0, 0]];
 var playerTurn = 0;
 var foot = document.getElementById('foot');
 
@@ -39,37 +39,53 @@ function resolution(tableGame) {
 				var h = resHorizon(tableGame, i, j, tableGame[i][j]);
 				var v = resVertic(tableGame, i, j, tableGame[i][j]);
 				var d = resDiago(tableGame, i, j, tableGame[i][j]);
-				if (h && v && d)
-					console.log("win");
+				if (h || v || d)
+				{
+					console.log("h: "+h+" v: "+v+" d: "+d);
+				}
 			}
 		}
 	}
 }
 
 function resHorizon(tableGame, i, j, valTab) {
-	for (var index = 0; index < 4 && j < (tableGame[i].length - 4); index++) {
-		if(index != tableGame[i][j + index])
+	for (var index = 0; index < 4 && j < (tableGame[i].length - 3); index++) {
+		if(valTab != tableGame[i][j + index])
 			return(0);
+		else
+		{
+			if (index+1 == 4) {
+				return(1);
+			}
+		}
 	}
-	return(1);
 }
 
 function resVertic(tableGame, i, j, valTab) {
-	for (var index = 0; index < 4 && j < (tableGame[i].length - 4); index++) {
-		if(index != tableGame[i + index][j])
+	for (var index = 0; index < 4 && j < (tableGame[i].length - 3); index++) {
+		if(valTab != tableGame[i + index][j])
 			return(0);
+		else
+		{
+			if (index+1 == 4) {
+				return(1);
+			}
+		}
 	}
-	return(1);
 }
 
 function resDiago(tableGame, i, j, valTab) {
-	for (var index = 0; index < 4 && j < (tableGame[i].length - 4); index++) {
-		if(index != tableGame[i + index][j + index])
+	for (var index = 0; index < 4 && j < (tableGame[i].length - 3); index++) {
+		if(valTab != tableGame[i + index][j + index])
 			return(0);
+		else
+		{
+			if (index+1 == 4) {
+				return(1);
+			}
+		}
 	}
-	return(1);
 }
-
 function playGame() {
 	playButton.addEventListener("click", function(){
 		if (!playerOne) {
