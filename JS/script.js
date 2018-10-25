@@ -3,6 +3,72 @@ var playerTwo;
 var player = document.getElementById('player');
 var chooseBlock = document.getElementById('choose');
 var playButton = document.getElementById('play');
+var tableGame =    [[0, 0, 0, 0, 0, 0, 0],
+					[0, 0, 0, 0, 0, 0, 0],
+					[0, 0, 0, 0, 0, 0, 0],
+					[0, 0, 0, 1, 0, 0, 0],
+					[0, 0, 0, 0, 0, 0, 0],
+					[0, 2, 0, 0, 0, 0, 0],
+					[0, 0, 0, 0, 1, 0, 0]];
+var playerTurn = 0;
+var foot = document.getElementById('foot');
+
+function turnPlay()
+{
+	if(playerTurn == 0)
+	{
+		console.log("Joueur 1");
+		playerTurn = 1;
+	}
+	else
+	{
+		console.log("Joueur 2");
+		playerTurn = 0;
+	}
+}
+
+foot.addEventListener("click", function(){
+		turnPlay();
+		resolution(tableGame);
+});
+
+function resolution(tableGame) {
+	for (var i = 0; i < tableGame.length; i++) {
+		for (var j = 0; j < tableGame[i].length; j++) {
+			if (tableGame[i][j] != 0) {
+				var h = resHorizon(tableGame, i, j, tableGame[i][j]);
+				var v = resVertic(tableGame, i, j, tableGame[i][j]);
+				var d = resDiago(tableGame, i, j, tableGame[i][j]);
+				if (h && v && d)
+					console.log("win");
+			}
+		}
+	}
+}
+
+function resHorizon(tableGame, i, j, valTab) {
+	for (var index = 0; index < 4 && j < (tableGame[i].length - 4); index++) {
+		if(index != tableGame[i][j + index])
+			return(0);
+	}
+	return(1);
+}
+
+function resVertic(tableGame, i, j, valTab) {
+	for (var index = 0; index < 4 && j < (tableGame[i].length - 4); index++) {
+		if(index != tableGame[i + index][j])
+			return(0);
+	}
+	return(1);
+}
+
+function resDiago(tableGame, i, j, valTab) {
+	for (var index = 0; index < 4 && j < (tableGame[i].length - 4); index++) {
+		if(index != tableGame[i + index][j + index])
+			return(0);
+	}
+	return(1);
+}
 
 function playGame() {
 	playButton.addEventListener("click", function(){
@@ -12,13 +78,6 @@ function playGame() {
 		}
 	});
 }
-
-/*function displaySetDisc(playerOne, playerTwo) {
-	if (!playerOne) {
-		chooseBlock.style.display = "block";
-		setDisc(playerOne, playerTwo);
-	}
-}*/
 
 function setDisc(playerOne, playerTwo) {
 	var choice = document.getElementsByClassName('discChoose');
@@ -37,13 +96,11 @@ function logoPlayer(choice) {
 		playerOne = choice.src;
 		player.innerHTML = "Joueur 2";
 		player.style.backgroundColor = "rgba(50, 250, 200, 1)"
-		console.log(playerOne);
 		choice.style.backgroundColor = "rgba(200, 250, 50, 1)";
 	}
 	else if (!playerTwo)
 	{
 		playerTwo = choice.src;
-		console.log(playerTwo);
 		choice.style.backgroundColor = "rgba(50, 250, 200, 1)";
 		setTimeout(function(){ chooseBlock.style.display = "none"; }, 3000);
 		player.style.backgroundColor = "grey";
