@@ -49,6 +49,7 @@ h1 {
 }
 
 main {
+	margin-top: 5%;
 	height: 60%;
 	width: 100%;
 	display: flex;
@@ -56,18 +57,20 @@ main {
 	align-items: center;
 }
 
-table {
-	width: 90%;
-	height: 90%;
+#divDisc {
+	width: 600px;
+	height: 600px;
 	background-color: green;
 	border-radius: 25px;
+	display: flex;
+	flex-wrap: wrap;
 }
 
-tr{
+#divDisc div{
+	width: 10%;
+	height: 10%;
+	margin: 2.14%;
 	background-color: blue;
-}
-
-td {
 	border-radius: 100%;
 }
 
@@ -132,7 +135,6 @@ footer {
 	width: 100%;
 	display: flex;
 	justify-content: center;
-	background-color: red;
 }
 
 #player {

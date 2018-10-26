@@ -13,14 +13,14 @@ var tableGame =    [[0, 0, 0, 0, 0, 0, 0],
 var playerTurn = 0;
 var foot = document.getElementById('foot');
 var tableSelect = document.getElementsByTagName('td');
-var encounter = encountInit();
+var encounter = tabDivInit("e", 51);
 var encountDiv = document.getElementById("encounter");
-
+var divDisc = tabDivInit("d", 50);
 
 function init_table(playerOne, playerTwo, playerTurn, tableGame)
 {
 	for(var i = 0; i < tableSelect.length; i++) {
-       tableSelect[i].addEventListener("click", backgroundIco(i, playerOne, playerTwo, playerTurn, tableGame));
+       divDisc[i].addEventListener("click", backgroundIco(i, playerOne, playerTwo, playerTurn, tableGame));
 	}
 }
 
@@ -28,12 +28,12 @@ function backgroundIco(i, playerOne, playerTwo, playerTurn, tableGame) {
     return function() {
     	if (playerTurn == 0)
     	{
-        	tableSelect[i].style.backgroundImage = "url('"+playerOne+"')";
+        	divDisc[i].style.backgroundImage = "url('"+playerOne+"')";
         	tableGame[i % (tableGame.length)][Math.floor(i / (tableGame.length))] = 1;
     	}
         else
         {
-        	tableSelect[i].style.backgroundImage = "url('"+playerTwo+"')";
+        	divDisc[i].style.backgroundImage = "url('"+playerTwo+"')";
         	tableGame[i % (tableGame.length)][Math.floor(i / (tableGame.length))] = 2;
     	}
     	console.log(tableGame);
@@ -54,10 +54,6 @@ function turnPlay()
 		playerTurn = 0;
 	}
 }
-
-foot.addEventListener("click", function(){
-		resolution(tableGame);
-});
 
 function resolution(tableGame) {
 	for (var i = 0; i < tableGame.length; i++) {
@@ -173,10 +169,10 @@ playGame();
 
 //css pour animation combat debut.
 
-function encountInit() {
+function tabDivInit(val, max) {
 	var array = [];
-	for (var i = 1; i < 51; i++) {
-		array.push(document.getElementById("e"+i));
+	for (var i = 1; i < max; i++) {
+		array.push(document.getElementById(val+i));
 	}
 	return(array);
 }
@@ -186,7 +182,8 @@ function encountStart() {
 	encountDiv.style.display = "flex";
 	encountFlash();
 	encountAction();
-	setTimeout(function(){ encountDiv.style.display = "none"; }, 2600);
+	setTimeout(function(){ encountDiv.style.marginLeft = "5000px"; encountDiv.style.transitionDuration = "1s";}, 2600);
+	setTimeout(function(){ encountDiv.style.display = "none";}, 3600);
 }
 
 function encountFlash() {
