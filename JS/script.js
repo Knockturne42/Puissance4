@@ -153,13 +153,15 @@ function logoPlayer(choice) {
 	{
 		playerTwo = choice.src;
 		choice.style.backgroundColor = "rgba(50, 250, 200, 1)";
-		setTimeout(function(){ chooseBlock.style.display = "none"; }, 5330);
+		setTimeout(function(){ chooseBlock.style.display = "none"; }, 5500);
 		player.style.backgroundColor = "grey";
 		player.innerHTML = "3";
 		setTimeout(function(){ player.innerHTML = "2"; }, 1000);
 		setTimeout(function(){ player.innerHTML = "1"; }, 2000);
 		setTimeout(function(){ player.innerHTML = "0"; }, 3000);
 		setTimeout(function(){ encountStart(); }, 3000);
+		setTimeout(function(){var audio = document.getElementById('myAudio');
+	audio.autoplay = "true"; audio.loop = "true";}, 2200)
 	}
 	else {
 	}
@@ -239,10 +241,5 @@ function encountAction()
 
 function encSetOut(i, t)
 {
-	setTimeout(function(){ encounter[i].style.backgroundColor = "blue"; }, t);
+	setTimeout(function(){ encounter[i].style.backgroundColor = "black"; }, t);
 }
-
-var vid = document.getElementById('myAudio');
-console.log(vid);
-vid.autoplay = "true";
-vid.load();
