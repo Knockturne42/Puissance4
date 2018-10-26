@@ -11,20 +11,19 @@ var tableGame =    [[0, 0, 0, 0, 0, 0, 0],
 					[0, 0, 0, 0, 0, 0, 0],
 					[0, 0, 0, 0, 0, 0, 0]];
 var playerTurn = 0;
-var foot = document.getElementById('foot');
-var tableSelect = document.getElementsByTagName('td');
+var bigDivDisc = document.getElementById('divDisc');
 var encounter = tabDivInit("e", 51);
 var encountDiv = document.getElementById("encounter");
 var divDisc = tabDivInit("d", 50);
 
-function init_table(playerOne, playerTwo, playerTurn, tableGame)
+function init_table(playerOne, playerTwo, tableGame)
 {
-	for(var i = 0; i < tableSelect.length; i++) {
-       divDisc[i].addEventListener("click", backgroundIco(i, playerOne, playerTwo, playerTurn, tableGame));
+	for(var i = 0; i < divDisc.length; i++) {
+       divDisc[i].addEventListener("click", backgroundIco(i, playerOne, playerTwo, tableGame));
 	}
 }
 
-function backgroundIco(i, playerOne, playerTwo, playerTurn, tableGame) {
+function backgroundIco(i, playerOne, playerTwo, tableGame) {
     return function() {
     	if (playerTurn == 0)
     	{
@@ -38,8 +37,16 @@ function backgroundIco(i, playerOne, playerTwo, playerTurn, tableGame) {
     	}
     	console.log(tableGame);
     	turnPlay();
+    	resolution(tableGame);
+    	// removeEvnt();
     };
 }
+
+// function removeEvnt(playerOne, playerTwo, playerTurn, tableGame) {
+// 	for(var i = 0; i < divDisc.length; i++) {
+//        divDisc[i].addEventListener("click", backgroundIco(i, playerOne, playerTwo, playerTurn, tableGame));
+// 	}
+// }
 
 function turnPlay()
 {
@@ -121,7 +128,9 @@ function playGame() {
 		}
 		else
 		{
-			init_table(playerOne, playerTwo, playerTurn, tableGame);
+			// bigDivDisc.addEventListener("click", function(){
+				init_table(playerOne, playerTwo, tableGame);
+			// });
 		}
 	});
 }

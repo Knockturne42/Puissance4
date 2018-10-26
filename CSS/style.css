@@ -68,8 +68,14 @@ main {
 
 #divDisc div{
 	width: 10%;
+	height: 100%;
+	margin: 0 2.14%;
+}
+
+#divDisc div div{
+	width: 100%;
 	height: 10%;
-	margin: 2.14%;
+	margin: 38% 0;
 	background-color: blue;
 	border-radius: 100%;
 }
