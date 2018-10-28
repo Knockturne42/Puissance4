@@ -12,12 +12,16 @@ var tableGame =    [[0, 0, 0, 0, 0, 0, 0],
 					[0, 0, 0, 0, 0, 0, 0],
 					[0, 0, 0, 0, 0, 0, 0],
 					[0, 0, 0, 0, 0, 0, 0]];
-var playerTurn = 0;
+var playerTurn = 1;
 var bigDivDisc = document.getElementById('divDisc');
 var encounter = tabDivInit("e", 51);
 var encountDiv = document.getElementById("encounter");
 var divDisc = tabDivInit("d", 50);
 var pokeSound = document.getElementsByClassName("pokeSound");
+var opening = document.getElementById('opening');
+var playerOneDiv = document.getElementById('playerOne');
+var playerTwoDiv = document.getElementById('playerTwo');
+var shadow = document.getElementsByClassName('shadowPlayers');
 
 function init_table(playerOne, playerTwo, tableGame)
 {
@@ -55,15 +59,35 @@ function backgroundIco(i, playerOne, playerTwo, tableGame) {
 
 function turnPlay()
 {
-	if(playerTurn == 0)
+	if(playerTurn == 1)
 	{
 		console.log("Joueur 1");
-		playerTurn = 1;
+		playerTurn = 0;
+		playerOneDiv.style.height = "300px";
+		playerOneDiv.style.width = "200px";
+		playerTwoDiv.style.height = "250px";
+		playerTwoDiv.style.width = "150px";
+		shadow[0].style.width = "200px";
+		shadow[0].style.height = "300px";
+		shadow[1].style.width = "150px";
+		shadow[1].style.height = "250px";
+		setTimeout(function(){ shadow[0].style.display = "none"; }, 500);
+		setTimeout(function(){ shadow[1].style.display = "block"; }, 500);
 	}
 	else
 	{
 		console.log("Joueur 2");
-		playerTurn = 0;
+		playerTurn = 1;
+		playerOneDiv.style.height = "250px";
+		playerOneDiv.style.width = "150px";
+		playerTwoDiv.style.height = "300px";
+		playerTwoDiv.style.width = "200px";
+		shadow[1].style.width = "200px";
+		shadow[1].style.height = "300px";
+		shadow[0].style.width = "150px";
+		shadow[0].style.height = "250px";
+		setTimeout(function(){ shadow[1].style.display = "none"; }, 500);
+		setTimeout(function(){ shadow[0].style.display = "block"; }, 500);
 	}
 }
 
@@ -131,12 +155,6 @@ function playGame() {
 			chooseBlock.style.display = "block";
 			setDisc(playerOne, playerTwo);
 		}
-		else
-		{
-			// bigDivDisc.addEventListener("click", function(){
-				init_table(playerOne, playerTwo, tableGame);
-			// });
-		}
 	});
 }
 
@@ -157,6 +175,8 @@ function logoPlayer(choice, pokeSound) {
 	{
 		playerOne = choice.src;
 		soundOne = pokeSound;
+		var playerOneDivImg = document.getElementById('playerOneImg');
+		playerOneDivImg.style.backgroundImage = "url('"+playerOne+"')";
 		player.innerHTML = "Joueur 2";
 		player.style.backgroundColor = "rgba(50, 250, 200, 1)"
 		choice.style.backgroundColor = "rgba(200, 250, 50, 1)";
@@ -165,6 +185,8 @@ function logoPlayer(choice, pokeSound) {
 	{
 		playerTwo = choice.src;
 		soundTwo = pokeSound;
+		var playerTwoDivImg = document.getElementById('playerTwoImg');
+		playerTwoDivImg.style.backgroundImage = "url('"+playerTwo+"')";
 		choice.style.backgroundColor = "rgba(50, 250, 200, 1)";
 		setTimeout(function(){ chooseBlock.style.display = "none"; }, 5500);
 		player.style.backgroundColor = "grey";
@@ -175,7 +197,8 @@ function logoPlayer(choice, pokeSound) {
 		setTimeout(function(){ encountStart(); }, 3000);
 		setTimeout(function(){var audio = document.getElementById('pokeBattle');
 		audio.play(); audio.loop = "true";}, 2200)
-		setTimeout(function(){var opening = document.getElementById('opening'); opening.pause();}, 3200);
+		setTimeout(function(){opening.pause();}, 3200);
+		init_table(playerOne, playerTwo, tableGame);
 	}
 	else {
 	}
@@ -202,6 +225,7 @@ function encountStart() {
 	encountAction();
 	setTimeout(function(){ encountDiv.style.marginLeft = "5000px"; encountDiv.style.transitionDuration = "1s";}, 2600);
 	setTimeout(function(){ encountDiv.style.display = "none";}, 3600);
+	setTimeout(function(){ turnPlay();}, 3600);
 }
 
 function encountFlash() {
@@ -259,3 +283,5 @@ function encSetOut(i, t)
 {
 	setTimeout(function(){ encounter[i].style.backgroundColor = "black"; }, t);
 }
+
+// chrome://flags/#autoplay-policy
