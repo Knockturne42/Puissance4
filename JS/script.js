@@ -73,33 +73,6 @@ function effectSlide(myDisc, player, i) {
 
 }
 
-// function init_table(playerOne, playerTwo, tableGame)
-// {
-// 	for(var i = 0; i < divDisc.length; i++) {
-//        divDisc[i].addEventListener("click", backgroundIco(i, playerOne, playerTwo, tableGame));
-// 	}
-// }
-
-// function backgroundIco(i, playerOne, playerTwo, tableGame) {
-//     return function() {
-//     	if (playerTurn == 0)
-//     	{
-//     		soundOne.play();
-//         	divDisc[i].style.backgroundImage = "url('"+playerOne+"')";
-//         	tableGame[i % (tableGame.length)][Math.floor(i / (tableGame.length))] = 1;
-//     	}
-//         else
-//         {
-//         	soundTwo.play();
-//         	divDisc[i].style.backgroundImage = "url('"+playerTwo+"')";
-//         	tableGame[i % (tableGame.length)][Math.floor(i / (tableGame.length))] = 2;
-//     	}
-//     	console.log(tableGame);
-//     	turnPlay();
-//     	resolution(tableGame);
-//     };
-// }
-
 function turnPlay()
 {
 	if(playerTurn == 0)
@@ -256,7 +229,6 @@ function logoPlayer(choice, pokeSound) {
 		setTimeout(function(){var audio = document.getElementById('pokeBattle');
 		audio.play(); audio.loop = "true";}, 2200)
 		setTimeout(function(){opening.pause();}, 3200);
-		// init_table(playerOne, playerTwo, tableGame);
 	}
 	else {
 	}
