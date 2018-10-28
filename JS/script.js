@@ -1,5 +1,7 @@
 var playerOne;
+var soundOne;
 var playerTwo;
+var soundTwo;
 var player = document.getElementById('player');
 var chooseBlock = document.getElementById('choose');
 var playButton = document.getElementById('play');
@@ -15,6 +17,7 @@ var bigDivDisc = document.getElementById('divDisc');
 var encounter = tabDivInit("e", 51);
 var encountDiv = document.getElementById("encounter");
 var divDisc = tabDivInit("d", 50);
+var pokeSound = document.getElementsByClassName("pokeSound");
 
 function init_table(playerOne, playerTwo, tableGame)
 {
@@ -27,11 +30,13 @@ function backgroundIco(i, playerOne, playerTwo, tableGame) {
     return function() {
     	if (playerTurn == 0)
     	{
+    		soundOne.play();
         	divDisc[i].style.backgroundImage = "url('"+playerOne+"')";
         	tableGame[i % (tableGame.length)][Math.floor(i / (tableGame.length))] = 1;
     	}
         else
         {
+        	soundTwo.play();
         	divDisc[i].style.backgroundImage = "url('"+playerTwo+"')";
         	tableGame[i % (tableGame.length)][Math.floor(i / (tableGame.length))] = 2;
     	}
@@ -140,16 +145,18 @@ function setDisc(playerOne, playerTwo) {
 	for (var i = 0; i < choice.length; i++) {
 		(function(index, playerOne, playerTwo){
 			choice[index].addEventListener("click", function() {
-				logoPlayer(choice[index]);
+				logoPlayer(choice[index], pokeSound[index]);
+				pokeSound[index].play();
 			})
 		})(i);
 	}
 }
 
-function logoPlayer(choice) {
+function logoPlayer(choice, pokeSound) {
 	if (!playerOne)
 	{
 		playerOne = choice.src;
+		soundOne = pokeSound;
 		player.innerHTML = "Joueur 2";
 		player.style.backgroundColor = "rgba(50, 250, 200, 1)"
 		choice.style.backgroundColor = "rgba(200, 250, 50, 1)";
@@ -157,6 +164,7 @@ function logoPlayer(choice) {
 	else if (!playerTwo)
 	{
 		playerTwo = choice.src;
+		soundTwo = pokeSound;
 		choice.style.backgroundColor = "rgba(50, 250, 200, 1)";
 		setTimeout(function(){ chooseBlock.style.display = "none"; }, 5500);
 		player.style.backgroundColor = "grey";
@@ -165,8 +173,9 @@ function logoPlayer(choice) {
 		setTimeout(function(){ player.innerHTML = "1"; }, 2000);
 		setTimeout(function(){ player.innerHTML = "0"; }, 3000);
 		setTimeout(function(){ encountStart(); }, 3000);
-		setTimeout(function(){var audio = document.getElementById('myAudio');
-	audio.autoplay = "true"; audio.loop = "true";}, 2200)
+		setTimeout(function(){var audio = document.getElementById('pokeBattle');
+		audio.play(); audio.loop = "true";}, 2200)
+		setTimeout(function(){var opening = document.getElementById('opening'); opening.pause();}, 3200);
 	}
 	else {
 	}
@@ -202,6 +211,7 @@ function encountFlash() {
 	setTimeout(function(){ encountDiv.style.backgroundColor = "rgba(255, 255, 255, 0.8)"; }, 498);
 	setTimeout(function(){ encountDiv.style.backgroundColor = "rgba(0, 0, 0, 0.8)"; }, 664);
 	setTimeout(function(){ encountDiv.style.backgroundColor = "rgba(255, 255, 255, 0.8)"; }, 830);
+	setTimeout(function(){ encountDiv.style.backgroundColor = "rgba(255, 255, 255, 0)"; }, 996);
 }
 
 function encountAction()

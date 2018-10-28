@@ -57,6 +57,32 @@ main {
 	align-items: center;
 }
 
+.divPlayers {
+	width: 200px;
+	height: 300px;
+	background-color: red;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.divPlayers p {
+	text-align: center;
+}
+
+#playerOne, #playerTwo{
+	width: 150px;
+	height: 250px;
+	background-color: blue;
+}
+#playerOneImg, #playerTwoImg {
+	height: 80%;
+	width: 100%;
+	background-image: url('../IMG/abra.svg');
+	background-size: 100%;
+	background-repeat: no-repeat;
+}
+
 #divDisc {
 	width: 600px;
 	height: 600px;
@@ -100,7 +126,7 @@ footer {
 	display: none;
 }
 
-#myAudio {
+audio {
 	display: none;
 }
 
