@@ -98,9 +98,10 @@ function resolution(tableGame) {
 				var h = resHorizon(tableGame, i, j, tableGame[i][j]);
 				var v = resVertic(tableGame, i, j, tableGame[i][j]);
 				var d = resDiago(tableGame, i, j, tableGame[i][j]);
-				if (h || v || d)
+				var dTwo = resDiagoTwo(tableGame, i, j, tableGame[i][j])
+				if (h || v || d || dTwo)
 				{
-					console.log("h: "+h+" v: "+v+" d: "+d);
+					console.log("h: "+h+" v: "+v+" d: "+d+" dTwo: "+dTwo);
 				}
 			}
 		}
@@ -138,6 +139,20 @@ function resVertic(tableGame, i, j, valTab) {
 function resDiago(tableGame, i, j, valTab) {
 	for (var index = 0; index < 4 && j < (tableGame[i].length - 3) && i < (tableGame[i].length - 3); index++) {
 		if(valTab != tableGame[i + index][j + index])
+			return(0);
+		else
+		{
+			if (index+1 == 4) {
+				return(1);
+			}
+		}
+	}
+	return(0);
+}
+
+function resDiagoTwo(tableGame, i, j, valTab) {
+	for (var index = 0; index < 4 && j > 2 && i < (tableGame[i].length - 3); index++) {
+		if(valTab != tableGame[i + index][j - index])
 			return(0);
 		else
 		{
