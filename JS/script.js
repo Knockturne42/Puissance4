@@ -22,39 +22,82 @@ var opening = document.getElementById('opening');
 var playerOneDiv = document.getElementById('playerOne');
 var playerTwoDiv = document.getElementById('playerTwo');
 var shadow = document.getElementsByClassName('shadowPlayers');
+var tableCol = document.getElementsByClassName('tableCol');
 
-function init_table(playerOne, playerTwo, tableGame)
-{
-	for(var i = 0; i < divDisc.length; i++) {
-       divDisc[i].addEventListener("click", backgroundIco(i, playerOne, playerTwo, tableGame));
+function discSet(i, j) {
+	return function(){
+		var index = 0
+
+		for (index; index < tableGame.length && !tableGame[i+index][j]; index++) {
+		}
+		if (index) {
+			console.log(index);
+			if (playerTurn)	
+			{
+				setTimeout(function(){ divDisc[j * 7 + index - 1].style.backgroundImage = "url('"+playerOne+"')"; divDisc[j * 7 + index - 1].style.backgroundPosition = "0px 0px"; divDisc[j * 7 + index - 1].style.transitionDuration = "0.4s"}, (200 * index-3 + 101));
+				tableGame[i + index - 1][j] = 2;
+				slideDown(index - 1, j, playerOne)
+				turnPlay();
+				resolution(tableGame);
+			}
+			else
+			{
+				setTimeout(function(){ divDisc[j * 7 + index - 1].style.backgroundImage = "url('"+playerTwo+"')";  divDisc[j * 7 + index - 1].style.backgroundPosition = "0px 0px"; divDisc[j * 7 + index - 1].style.transitionDuration = "0.4s"}, (200 * index-3 + 101));
+				tableGame[i + index - 1][j] = 1;
+				slideDown(index - 1, j, playerTwo)
+				turnPlay();
+				resolution(tableGame)
+			}
+		}
 	}
 }
 
-function backgroundIco(i, playerOne, playerTwo, tableGame) {
-    return function() {
-    	if (playerTurn == 0)
-    	{
-    		soundOne.play();
-        	divDisc[i].style.backgroundImage = "url('"+playerOne+"')";
-        	tableGame[i % (tableGame.length)][Math.floor(i / (tableGame.length))] = 1;
-    	}
-        else
-        {
-        	soundTwo.play();
-        	divDisc[i].style.backgroundImage = "url('"+playerTwo+"')";
-        	tableGame[i % (tableGame.length)][Math.floor(i / (tableGame.length))] = 2;
-    	}
-    	console.log(tableGame);
-    	turnPlay();
-    	resolution(tableGame);
-    	// removeEvnt();
-    };
+function init_table() {
+	for (var i = 0; i < tableCol.length; i++) {
+		tableCol[i].addEventListener("click", discSet(0, i));
+	}
 }
 
-// function removeEvnt(playerOne, playerTwo, playerTurn, tableGame) {
+function slideDown(i, j, player) {
+	for (var index = 0; index < i; index++) {
+		effectSlide(divDisc[j * 7 + index], player, index);
+	}
+}
+
+function effectSlide(myDisc, player, i) {
+	myDisc.style.backgroundImage = "url('"+player+"')";
+	setTimeout(function(){ setTimeout(function(){ myDisc.style.backgroundPosition = "0px 60px";
+	myDisc.style.transitionDuration = "0.4s"; }, 200 * i); }, 1);
+	setTimeout(function(){ myDisc.style.backgroundImage = "";
+	myDisc.style.transitionDuration = "0s"; myDisc.style.backgroundPosition = "0px -60px";}, (200 * i + 201));
+
+}
+
+// function init_table(playerOne, playerTwo, tableGame)
+// {
 // 	for(var i = 0; i < divDisc.length; i++) {
-//        divDisc[i].addEventListener("click", backgroundIco(i, playerOne, playerTwo, playerTurn, tableGame));
+//        divDisc[i].addEventListener("click", backgroundIco(i, playerOne, playerTwo, tableGame));
 // 	}
+// }
+
+// function backgroundIco(i, playerOne, playerTwo, tableGame) {
+//     return function() {
+//     	if (playerTurn == 0)
+//     	{
+//     		soundOne.play();
+//         	divDisc[i].style.backgroundImage = "url('"+playerOne+"')";
+//         	tableGame[i % (tableGame.length)][Math.floor(i / (tableGame.length))] = 1;
+//     	}
+//         else
+//         {
+//         	soundTwo.play();
+//         	divDisc[i].style.backgroundImage = "url('"+playerTwo+"')";
+//         	tableGame[i % (tableGame.length)][Math.floor(i / (tableGame.length))] = 2;
+//     	}
+//     	console.log(tableGame);
+//     	turnPlay();
+//     	resolution(tableGame);
+//     };
 // }
 
 function turnPlay()
@@ -213,7 +256,7 @@ function logoPlayer(choice, pokeSound) {
 		setTimeout(function(){var audio = document.getElementById('pokeBattle');
 		audio.play(); audio.loop = "true";}, 2200)
 		setTimeout(function(){opening.pause();}, 3200);
-		init_table(playerOne, playerTwo, tableGame);
+		// init_table(playerOne, playerTwo, tableGame);
 	}
 	else {
 	}
@@ -240,7 +283,7 @@ function encountStart() {
 	encountAction();
 	setTimeout(function(){ encountDiv.style.marginLeft = "5000px"; encountDiv.style.transitionDuration = "1s";}, 2600);
 	setTimeout(function(){ encountDiv.style.display = "none";}, 3600);
-	setTimeout(function(){ turnPlay();}, 3600);
+	setTimeout(function(){ turnPlay(); init_table();}, 3600);
 }
 
 function encountFlash() {
