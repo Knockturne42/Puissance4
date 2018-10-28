@@ -73,6 +73,7 @@ main {
 	width: 150px;
 	height: 250px;
 	transition-duration: 0.5s;
+	border-radius: 25px;
 }
 
 .divPlayers p {
@@ -86,6 +87,7 @@ main {
 	z-index: 0;
 	position: absolute;
 	transition-duration: 0.5s;
+	border-radius: 25px;
 }
 #playerOne {
 	background-color: rgba(200, 250, 50, 1);

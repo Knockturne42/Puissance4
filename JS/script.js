@@ -12,7 +12,7 @@ var tableGame =    [[0, 0, 0, 0, 0, 0, 0],
 					[0, 0, 0, 0, 0, 0, 0],
 					[0, 0, 0, 0, 0, 0, 0],
 					[0, 0, 0, 0, 0, 0, 0]];
-var playerTurn = 1;
+var playerTurn = 0;
 var bigDivDisc = document.getElementById('divDisc');
 var encounter = tabDivInit("e", 51);
 var encountDiv = document.getElementById("encounter");
@@ -34,7 +34,7 @@ function discSet(i, j) {
 			console.log(index);
 			if (playerTurn)	
 			{
-				setTimeout(function(){ divDisc[j * 7 + index - 1].style.backgroundImage = "url('"+playerOne+"')"; divDisc[j * 7 + index - 1].style.backgroundPosition = "0px 0px"; divDisc[j * 7 + index - 1].style.transitionDuration = "0.4s"}, (200 * (index-1)));
+				setTimeout(function(){ divDisc[j * 7 + index - 1].style.backgroundImage = "url('"+playerOne+"')"; divDisc[j * 7 + index - 1].style.backgroundPosition = "0px 0px"; divDisc[j * 7 + index - 1].style.transitionDuration = "0.4s"; soundOne.play();}, (200 * (index-1)));
 				tableGame[i + index - 1][j] = 2;
 				slideDown(index - 1, j, playerOne)
 				turnPlay();
@@ -42,7 +42,7 @@ function discSet(i, j) {
 			}
 			else
 			{
-				setTimeout(function(){ divDisc[j * 7 + index - 1].style.backgroundImage = "url('"+playerTwo+"')";  divDisc[j * 7 + index - 1].style.backgroundPosition = "0px 0px"; divDisc[j * 7 + index - 1].style.transitionDuration = "0.4s"}, (200 * (index-1)));
+				setTimeout(function(){ divDisc[j * 7 + index - 1].style.backgroundImage = "url('"+playerTwo+"')";  divDisc[j * 7 + index - 1].style.backgroundPosition = "0px 0px"; divDisc[j * 7 + index - 1].style.transitionDuration = "0.4s"; soundTwo.play();}, (200 * (index-1)));
 				tableGame[i + index - 1][j] = 1;
 				slideDown(index - 1, j, playerTwo)
 				turnPlay();
@@ -102,10 +102,10 @@ function effectSlide(myDisc, player, i) {
 
 function turnPlay()
 {
-	if(playerTurn == 1)
+	if(playerTurn == 0)
 	{
 		console.log("Joueur 1");
-		playerTurn = 0;
+		playerTurn = 1;
 		playerOneDiv.style.height = "300px";
 		playerOneDiv.style.width = "200px";
 		playerTwoDiv.style.height = "250px";
@@ -120,7 +120,7 @@ function turnPlay()
 	else
 	{
 		console.log("Joueur 2");
-		playerTurn = 1;
+		playerTurn = 0;
 		playerOneDiv.style.height = "250px";
 		playerOneDiv.style.width = "150px";
 		playerTwoDiv.style.height = "300px";
