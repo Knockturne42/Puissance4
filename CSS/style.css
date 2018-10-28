@@ -66,6 +66,14 @@ main {
 	align-items: center;
 }
 
+.shadowPlayers {
+	z-index: 1;
+	background-color: rgba(0, 0, 0, 0.9);
+	position: relative;
+	width: 200px;
+	height: 300px;
+}
+
 .divPlayers p {
 	text-align: center;
 }
@@ -74,7 +82,17 @@ main {
 	width: 150px;
 	height: 250px;
 	background-color: blue;
+	z-index: 0;
+	position: absolute;
 }
+#playerOne {
+	border: 3px solid rgba(200, 250, 50, 1);
+}
+
+#playerTwo {
+	border: 3px solid rgba(50, 250, 200, 1);
+}
+
 #playerOneImg, #playerTwoImg {
 	height: 80%;
 	width: 100%;
