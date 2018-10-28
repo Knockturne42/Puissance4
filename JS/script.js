@@ -23,6 +23,7 @@ var playerOneDiv = document.getElementById('playerOne');
 var playerTwoDiv = document.getElementById('playerTwo');
 var shadow = document.getElementsByClassName('shadowPlayers');
 var tableCol = document.getElementsByClassName('tableCol');
+var select = document.getElementById('select');
 
 function discSet(i, j) {
 	return function(){
@@ -194,8 +195,11 @@ function setDisc(playerOne, playerTwo) {
 	for (var i = 0; i < choice.length; i++) {
 		(function(index, playerOne, playerTwo){
 			choice[index].addEventListener("click", function() {
-				logoPlayer(choice[index], pokeSound[index]);
-				pokeSound[index].play();
+				select.play();
+				setTimeout(function(){
+					logoPlayer(choice[index], pokeSound[index]);
+					pokeSound[index].play();
+				},500);
 			})
 		})(i);
 	}
@@ -212,7 +216,7 @@ function logoPlayer(choice, pokeSound) {
 		player.style.backgroundColor = "rgba(50, 250, 200, 1)"
 		choice.style.backgroundColor = "rgba(200, 250, 50, 1)";
 	}
-	else if (!playerTwo)
+	else if (!playerTwo && playerOne != choice.src)
 	{
 		playerTwo = choice.src;
 		soundTwo = pokeSound;
