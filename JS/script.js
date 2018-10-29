@@ -32,7 +32,9 @@ function discSet(i, j) {
 		for (index; index < tableGame.length && !tableGame[i+index][j]; index++) {
 		}
 		if (index) {
-			console.log(index);
+			var pause = document.getElementById('pause');
+			pause.style.display = "block";
+			setTimeout(function(){ pause.style.display = "none";}, (index-1) * 200);
 			if (playerTurn)	
 			{
 				setTimeout(function(){ divDisc[j * 7 + index - 1].style.backgroundImage = "url('"+playerOne+"')"; divDisc[j * 7 + index - 1].style.backgroundPosition = "0px 0px"; divDisc[j * 7 + index - 1].style.transitionDuration = "0.4s"; soundOne.play();}, (200 * (index-1)));
@@ -185,6 +187,9 @@ function playGame() {
 	playButton.addEventListener("click", function(){
 		if (!playerOne) {
 			chooseBlock.style.display = "block";
+			opening.pause();
+			var audio = document.getElementById('chooseSound');
+			audio.play();
 			setDisc(playerOne, playerTwo);
 		}
 	});
@@ -232,7 +237,7 @@ function logoPlayer(choice, pokeSound) {
 		setTimeout(function(){ encountStart(); }, 3000);
 		setTimeout(function(){var audio = document.getElementById('pokeBattle');
 		audio.play(); audio.loop = "true";}, 2200)
-		setTimeout(function(){opening.pause();}, 3200);
+		setTimeout(function(){chooseSound = document.getElementById('chooseSound'); chooseSound.pause();}, 3200);
 	}
 	else {
 	}
