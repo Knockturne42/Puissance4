@@ -90,11 +90,11 @@ main {
 	border-radius: 25px;
 }
 #playerOne {
-	background-color: rgba(200, 250, 50, 1);
+	background-color: #E12626;
 }
 
 #playerTwo {
-	background-color: rgba(50, 250, 200, 1);
+	background-color: #1B21E9;
 }
 
 #playerOneImg, #playerTwoImg {
@@ -149,8 +149,48 @@ footer {
 	position: absolute;
 	width: 100%;
 	height: 100%;
-	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
 	display: none;
+}
+
+#result {
+	z-index: 2;
+	background-color: rgba(0, 0, 0, 0.5);
+	top: 0;
+	left: 0;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	flex-direction: column;
+	display: none;
+}
+
+.resu {
+	height: 50%;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.resu p {
+	font-size: 5vw;
+}
+
+#win {
+	width: 200px;
+	height: 200px;
+	background-repeat: no-repeat;
+	background-size: 100%;
+}
+#lose {
+	width: 200px;
+	height: 200px;
+	background-repeat: no-repeat;
+	background-size: 100%;
 }
 
 #pause {
@@ -201,20 +241,15 @@ audio {
 	transition-duration: 2s;
 }
 
-#players {
-	width: 100%;
-	display: flex;
-	justify-content: center;
-}
-
 #player {
 	width: 20%;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	font-size: 4vw;
+	color: yellow;
 	border-radius: 25px;
-	background-color: rgba(200, 250, 50, 1);
+	background-color: #E12626;
 }
 
 #choose img {
