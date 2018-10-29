@@ -137,9 +137,7 @@ function winLose(playerWin)
 	var divRes = document.getElementsByClassName('resu');
 	if (playerWin == 2) {
 		resuP[0].innerHTML = "Joueur 1 Win";
-		resuP[0].style.color = "#E12626";
 		resuP[1].innerHTML = "Joueur 2 Lose";
-		resuP[1].style.color = "#1B21E9";
 		win.style.backgroundImage = "url('"+playerOne+"')";
 		divRes[0].style.backgroundColor = "rgba(225, 38, 38, 0.5)";
 		lose.style.backgroundImage = "url('"+playerTwo+"')";
@@ -147,9 +145,7 @@ function winLose(playerWin)
 	}
 	else {
 		resuP[0].innerHTML = "Joueur 2 Win";
-		resuP[0].style.color = "#1B21E9";
 		resuP[1].innerHTML = "Joueur 1 Lose";
-		resuP[1].style.color = "#E12626";
 		win.style.backgroundImage = "url('"+playerTwo+"')";
 		divRes[0].style.backgroundColor = "rgba(38, 38, 225, 0.5)";
 		lose.style.backgroundImage = "url('"+playerOne+"')";
