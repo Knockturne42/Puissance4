@@ -24,6 +24,31 @@ var playerTwoDiv = document.getElementById('playerTwo');
 var shadow = document.getElementsByClassName('shadowPlayers');
 var tableCol = document.getElementsByClassName('tableCol');
 var select = document.getElementById('select');
+var count = 0;
+var divDiscModule = document.getElementById('divDiscModule');
+
+function createCol(int, intDeux) {
+	for (var i = 0; i < int; i++) {
+		var elem = document.createElement("DIV");
+		elem.setAttribute("class", "tableCol");
+		elem.setAttribute("id", "col" + i);
+		divDiscModule.appendChild(elem);
+		createDiv(document.getElementById('col'+i), intDeux, count);
+	}
+}
+
+function createDiv(tableCol, int, num)
+{
+	for (var i = 0; i < int; i++) {
+		var elem = document.createElement("DIV");
+		elem.setAttribute("class", "divLigne");
+		elem.setAttribute("id", "d" + num);
+		tableCol.appendChild(elem);
+		count++;
+	}
+}
+
+createCol(7, 7);
 
 function discSet(i, j) {
 	return function(){
