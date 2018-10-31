@@ -2,21 +2,17 @@ var playerOne;
 var soundOne;
 var playerTwo;
 var soundTwo;
+var int = parseInt(prompt("Enter number of COLUMNS"));
+var intDeux = parseInt(prompt("Enter number of LINE"));
 var player = document.getElementById('player');
 var chooseBlock = document.getElementById('choose');
 var playButton = document.getElementById('play');
-var tableGame =    [[0, 0, 0, 0, 0, 0, 0],
-					[0, 0, 0, 0, 0, 0, 0],
-					[0, 0, 0, 0, 0, 0, 0],
-					[0, 0, 0, 0, 0, 0, 0],
-					[0, 0, 0, 0, 0, 0, 0],
-					[0, 0, 0, 0, 0, 0, 0],
-					[0, 0, 0, 0, 0, 0, 0]];
+var tableGame = init_tableJS(int, intDeux);
 var playerTurn = 0;
 var bigDivDisc = document.getElementById('divDisc');
-var encounter = tabDivInit("e", 51);
+var encounter = tabDivInit("e", 51, 1);
 var encountDiv = document.getElementById("encounter");
-var divDisc = tabDivInit("d", 50);
+var divDisc;
 var pokeSound = document.getElementsByClassName("pokeSound");
 var opening = document.getElementById('opening');
 var playerOneDiv = document.getElementById('playerOne');
@@ -25,16 +21,30 @@ var shadow = document.getElementsByClassName('shadowPlayers');
 var tableCol = document.getElementsByClassName('tableCol');
 var select = document.getElementById('select');
 var count = 0;
-var divDiscModule = document.getElementById('divDiscModule');
+// var divDiscModule = document.getElementById('divDiscModule');
+
+function init_tableJS(int, intDeux) {
+	table = []
+	for (var i = 0; i < int; i++) {
+		table[i] = []
+		for (var j = 0; j < intDeux; j++) {
+			table[i][j] = 0;
+		}
+	}
+	return table;
+}
 
 function createCol(int, intDeux) {
-	for (var i = 0; i < int; i++) {
+	var i = 0
+	for (i; i < int; i++) {
 		var elem = document.createElement("DIV");
 		elem.setAttribute("class", "tableCol");
 		elem.setAttribute("id", "col" + i);
-		divDiscModule.appendChild(elem);
+		bigDivDisc.appendChild(elem);
+		elem.style.width = ""+((100 - int * 2) / int) + "%";
 		createDiv(document.getElementById('col'+i), intDeux, count);
 	}
+	divDisc = tabDivInit("d", count, 0);
 }
 
 function createDiv(tableCol, int, num)
@@ -42,19 +52,19 @@ function createDiv(tableCol, int, num)
 	for (var i = 0; i < int; i++) {
 		var elem = document.createElement("DIV");
 		elem.setAttribute("class", "divLigne");
-		elem.setAttribute("id", "d" + num);
+		elem.setAttribute("id", "d" + (num + i));
 		tableCol.appendChild(elem);
+		elem.style.height = ""+((100 - int * 2) / int) + "%";
 		count++;
 	}
 }
 
-createCol(7, 7);
+createCol(int, intDeux);
 
 function discSet(i, j) {
 	return function(){
-		var index = 0
-
-		for (index; index < tableGame.length && !tableGame[i+index][j]; index++) {
+		var index = 0;
+		for (index; index < intDeux && !tableGame[i+index][j]; index++) {
 		}
 		if (index) {
 			var pause = document.getElementById('pause');
@@ -62,7 +72,7 @@ function discSet(i, j) {
 			setTimeout(function(){ pause.style.display = "none";}, (index-1) * 200);
 			if (playerTurn)	
 			{
-				setTimeout(function(){ divDisc[j * 7 + index - 1].style.backgroundImage = "url('"+playerOne+"')"; divDisc[j * 7 + index - 1].style.backgroundPosition = "0px 0px"; divDisc[j * 7 + index - 1].style.transitionDuration = "0.4s"; soundOne.play();}, (200 * (index-1)));
+				setTimeout(function(){ divDisc[j * intDeux + index - 1].style.backgroundImage = "url('"+playerOne+"')"; divDisc[j * intDeux + index - 1].style.backgroundPosition = "0px 0px"; divDisc[j * intDeux + index - 1].style.transitionDuration = "0.4s"; soundOne.play();}, (200 * (index-1)));
 				tableGame[i + index - 1][j] = 2;
 				slideDown(index - 1, j, playerOne)
 				turnPlay();
@@ -70,7 +80,7 @@ function discSet(i, j) {
 			}
 			else
 			{
-				setTimeout(function(){ divDisc[j * 7 + index - 1].style.backgroundImage = "url('"+playerTwo+"')";  divDisc[j * 7 + index - 1].style.backgroundPosition = "0px 0px"; divDisc[j * 7 + index - 1].style.transitionDuration = "0.4s"; soundTwo.play();}, (200 * (index-1)));
+				setTimeout(function(){ divDisc[j * intDeux + index - 1].style.backgroundImage = "url('"+playerTwo+"')";  divDisc[j * intDeux + index - 1].style.backgroundPosition = "0px 0px"; divDisc[j * intDeux + index - 1].style.transitionDuration = "0.4s"; soundTwo.play();}, (200 * (index-1)));
 				tableGame[i + index - 1][j] = 1;
 				slideDown(index - 1, j, playerTwo);
 				turnPlay();
@@ -88,7 +98,7 @@ function init_table() {
 
 function slideDown(i, j, player) {
 	for (var index = 0; index < i; index++) {
-		effectSlide(divDisc[j * 7 + index], player, index);
+		effectSlide(divDisc[j * intDeux + index], player, index);
 	}
 }
 
@@ -300,9 +310,9 @@ playGame();
 
 //css pour animation combat debut.
 
-function tabDivInit(val, max) {
+function tabDivInit(val, max, i) {
 	var array = [];
-	for (var i = 1; i < max; i++) {
+	for (i; i < max; i++) {
 		array.push(document.getElementById(val+i));
 	}
 	return(array);
