@@ -23,6 +23,8 @@ var select = document.getElementById('select');
 var count = 0;
 var countPlay = 0;
 var score = document.getElementsByClassName('score');
+var replayButton = document.getElementById('replayButton');
+	replayButton.addEventListener("click", function(){resetBoard();});
 
 function init_tableJS(int, intDeux) {
 	table = []
@@ -72,7 +74,7 @@ function discSet(i, j) {
 			if (playerTurn)	
 			{
 				divDisc[j * intDeux + index - 1].style.backgroundPosition = "0px -"+(600 * parseInt(divDisc[j * intDeux + index - 1].style.height) / 100)+"px";
-				setTimeout(function(){ divDisc[j * intDeux + index - 1].style.backgroundImage = "url('"+playerOne+"')"; divDisc[j * intDeux + index - 1].style.backgroundPosition = "0px 0px"; divDisc[j * intDeux + index - 1].style.transitionDuration = "0.2s"; soundOne.load();  soundOne.play();}, (200 * (index-1)));
+				setTimeout(function(){ divDisc[j * intDeux + index - 1].style.backgroundImage = "url('"+playerOne+"')"; divDisc[j * intDeux + index - 1].style.backgroundPosition = "0px 0px"; divDisc[j * intDeux + index - 1].style.transitionDuration = "0.2s"; soundOne.play();}, (200 * (index-1)));
 				tableGame[i + index - 1][j] = 2;
 				slideDown(index - 1, j, playerOne)
 				turnPlay();
@@ -81,7 +83,7 @@ function discSet(i, j) {
 			else
 			{
 				divDisc[j * intDeux + index - 1].style.backgroundPosition = "0px -"+(600 * parseInt(divDisc[j * intDeux + index - 1].style.height) / 100)+"px";
-				setTimeout(function(){ divDisc[j * intDeux + index - 1].style.backgroundImage = "url('"+playerTwo+"')";  divDisc[j * intDeux + index - 1].style.backgroundPosition = "0px 0px"; divDisc[j * intDeux + index - 1].style.transitionDuration = "0.2s"; soundTwo.load(); soundTwo.play();}, (200 * (index-1)));
+				setTimeout(function(){ divDisc[j * intDeux + index - 1].style.backgroundImage = "url('"+playerTwo+"')";  divDisc[j * intDeux + index - 1].style.backgroundPosition = "0px 0px"; divDisc[j * intDeux + index - 1].style.transitionDuration = "0.2s"; soundTwo.play();}, (200 * (index-1)));
 				tableGame[i + index - 1][j] = 1;
 				slideDown(index - 1, j, playerTwo);
 				turnPlay();
@@ -113,34 +115,47 @@ function effectSlide(myDisc, player, i) {
 
 }
 
-function turnPlay()
+function turnPlay(win)
 {
 	if(playerTurn == 0)
 	{
-		playerTurn = 1;
-		playerOneDiv.style.height = "300px";
-		playerOneDiv.style.width = "200px";
-		playerTwoDiv.style.height = "250px";
-		playerTwoDiv.style.width = "150px";
-		shadow[0].style.width = "200px";
-		shadow[0].style.height = "300px";
-		shadow[1].style.width = "150px";
-		shadow[1].style.height = "250px";
-		setTimeout(function(){ shadow[0].style.display = "none"; }, 500);
-		setTimeout(function(){ shadow[1].style.display = "block"; }, 500);
+			playerTurn = 1;
+			playerOneDiv.style.height = "300px";
+			playerOneDiv.style.width = "200px";
+			playerTwoDiv.style.height = "250px";
+			playerTwoDiv.style.width = "150px";
+			shadow[0].style.width = "200px";
+			shadow[0].style.height = "300px";
+			shadow[1].style.width = "150px";
+			shadow[1].style.height = "250px";
+			setTimeout(function(){ shadow[0].style.display = "none"; }, 500);
+			setTimeout(function(){ shadow[1].style.display = "block"; }, 500);
 	}
 	else
 	{
-		playerTurn = 0;
+			playerTurn = 0;
+			playerOneDiv.style.height = "250px";
+			playerOneDiv.style.width = "150px";
+			playerTwoDiv.style.height = "300px";
+			playerTwoDiv.style.width = "200px";
+			shadow[1].style.width = "200px";
+			shadow[1].style.height = "300px";
+			shadow[0].style.width = "150px";
+			shadow[0].style.height = "250px";
+			setTimeout(function(){ shadow[1].style.display = "none"; }, 500);
+			setTimeout(function(){ shadow[0].style.display = "block"; }, 500);
+	}
+	if(win)
+	{
+		playerTwoDiv.style.height = "250px";
+		playerTwoDiv.style.width = "150px";
 		playerOneDiv.style.height = "250px";
 		playerOneDiv.style.width = "150px";
-		playerTwoDiv.style.height = "300px";
-		playerTwoDiv.style.width = "200px";
-		shadow[1].style.width = "200px";
-		shadow[1].style.height = "300px";
+		shadow[1].style.width = "150px";
+		shadow[1].style.height = "250px";
 		shadow[0].style.width = "150px";
 		shadow[0].style.height = "250px";
-		setTimeout(function(){ shadow[1].style.display = "none"; }, 500);
+		setTimeout(function(){ shadow[1].style.display = "block"; }, 500);
 		setTimeout(function(){ shadow[0].style.display = "block"; }, 500);
 	}
 }
@@ -160,7 +175,10 @@ function resolution(tableGame) {
 	}
 	countPlay++;
 	if (countPlay == (int * intDeux))
+	{
+		console.log(tableGame);
 		matchNull();
+	}
 }
 
 function matchNull()
@@ -168,10 +186,13 @@ function matchNull()
 	var sound = document.getElementById('pokeBattle');
 	sound.pause();
 	var soundResult = document.getElementById('matchNull');
-	soundResult.load();
 	soundResult.play();
 	var resultat = document.getElementById('egal');
 	resultat.style.display = "flex";
+	turnPlay(1);
+	setTimeout(function(){
+		replay();
+	}, 5000);
 }
 
 function winLose(playerWin)
@@ -179,7 +200,6 @@ function winLose(playerWin)
 	var sound = document.getElementById('pokeBattle');
 	sound.pause();
 	var soundResult = document.getElementById('victory');
-	soundResult.load();
 	soundResult.play();
 	var resultat = document.getElementById('result');
 	result.style.display = "flex";
@@ -187,6 +207,7 @@ function winLose(playerWin)
 	var win = document.getElementById("win");
 	var lose = document.getElementById("lose");
 	var divRes = document.getElementsByClassName('resu');
+	turnPlay(1);
 	if (playerWin == 2) {
 		resuP[0].innerHTML = "Joueur 1 Win";
 		resuP[1].innerHTML = "Joueur 2 Lose";
@@ -213,8 +234,6 @@ function winLose(playerWin)
 function replay() {
 	var replayDiv = document.getElementById('replay');
 	replayDiv.style.display = "flex";
-	var replayButton = document.getElementById('replayButton');
-	replayButton.addEventListener("click", resetBoard());
 }
 
 function resetBoard(){
@@ -223,16 +242,27 @@ function resetBoard(){
 	tableGame = init_tableJS(int, intDeux);
 	playerOne = 0;
 	playerTwo = 0;
-	playerTurn = 0;
+	main = document.getElementById('main');
+	main.removeChild(bigDivDisc);
+	bigDivDisc = document.createElement('DIV');
+	bigDivDisc.setAttribute("id", "divDisc");
+	main.insertBefore(bigDivDisc, document.getElementById('egal'));
 	var replayDiv = document.getElementById('replay');
 	replayDiv.style.display = "none";
 	var resultat = document.getElementById('result');
 	result.style.display = "none";
+	var egal = document.getElementById('egal');
+	egal.style.display = "none";
 	var soundResult = document.getElementById('victory');
-	soundResult.pause();
-	var sound = document.getElementById('opening');
-	sound.load();
-	sound.play();
+	audio = document.getElementsByTagName('audio');
+	for (var i = 0; i < audio.length; i++) {
+		audio[i].pause();
+		audio[i].load();
+	}
+	count = 0;
+	countPlay = 0;
+	var replayButton = document.getElementById('replayButton');
+	replayButton.removeEventListener("click", function(){resetBoard();}	);
 	playGame();
 }
 
@@ -294,12 +324,12 @@ function resDiagoTwo(tableGame, i, j, valTab) {
 
 function playGame() {
 	createCol(int, intDeux);
+	opening.play();
 	playButton.addEventListener("click", function(){
 		if (!playerOne) {
 			chooseBlock.style.display = "flex";
 			opening.pause();
 			var audio = document.getElementById('chooseSound');
-			audio.load();
 			audio.play();
 			setDisc(playerOne, playerTwo);
 		}
@@ -311,11 +341,9 @@ function setDisc(playerOne, playerTwo) {
 	for (var i = 0; i < choice.length; i++) {
 		(function(index, playerOne, playerTwo){
 			choice[index].addEventListener("click", function() {
-				select.load();
 				select.play();
 				setTimeout(function(){
 					logoPlayer(choice[index], pokeSound[index]);
-					pokeSound[index].load();
 					pokeSound[index].play();
 				},500);
 			})
@@ -340,8 +368,13 @@ function logoPlayer(choice, pokeSound) {
 		soundTwo = pokeSound;
 		var playerTwoDivImg = document.getElementById('playerTwoImg');
 		playerTwoDivImg.style.backgroundImage = "url('"+playerTwo+"')";
+		var playerOneDivImg = document.getElementById('playerOneImg');
 		choice.style.backgroundColor = "#1B21E9";
-		setTimeout(function(){ chooseBlock.style.display = "none"; }, 5500);
+		setTimeout(function(){ chooseBlock.style.display = "none"; player.innerHTML = "Joueur 1"; player.style.backgroundColor = "#E12626"}, 5500);
+		setTimeout(function(){choice = document.getElementsByClassName('discChoose');
+		for (var i = 0; i < choice.length; i++) {
+			choice[i].style.backgroundColor = "rgba(0, 0, 0, 0)";
+		}}, 5500);
 		player.style.backgroundColor = "black";
 		player.innerHTML = "3";
 		setTimeout(function(){ player.innerHTML = "2"; }, 1000);
@@ -349,7 +382,6 @@ function logoPlayer(choice, pokeSound) {
 		setTimeout(function(){ player.innerHTML = "0"; }, 3000);
 		setTimeout(function(){ encountStart(); }, 3000);
 		setTimeout(function(){var audio = document.getElementById('pokeBattle');
-		audio.load();
 		audio.play(); audio.loop = "true";}, 2200)
 		setTimeout(function(){chooseSound = document.getElementById('chooseSound'); chooseSound.pause();}, 3200);
 	}
@@ -376,9 +408,13 @@ function encountStart() {
 	encountDiv.style.display = "flex";
 	encountFlash();
 	encountAction();
-	setTimeout(function(){ encountDiv.style.marginLeft = "5000px"; encountDiv.style.transitionDuration = "1s";}, 2600);
 	setTimeout(function(){ encountDiv.style.display = "none";}, 3600);
 	setTimeout(function(){ turnPlay(); init_table();}, 3600);
+	setTimeout(function() {
+		for (var i = 0; i < encounter.length; i++) {
+			encounter[i].style.backgroundColor = "rgba(0, 0, 0, 0)";
+		}
+	}, 3600)
 }
 
 function encountFlash() {
