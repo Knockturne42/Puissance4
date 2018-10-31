@@ -2,8 +2,8 @@ var playerOne;
 var soundOne;
 var playerTwo;
 var soundTwo;
-var int = parseInt(prompt("Enter number of COLUMNS"));
-var intDeux = parseInt(prompt("Enter number of LINE"));
+var int = parseInt(prompt("Enter number of COLUMNS/LINE"));
+var intDeux = int;
 var player = document.getElementById('player');
 var chooseBlock = document.getElementById('choose');
 var playButton = document.getElementById('play');
@@ -22,7 +22,7 @@ var tableCol = document.getElementsByClassName('tableCol');
 var select = document.getElementById('select');
 var count = 0;
 var countPlay = 0;
-// var divDiscModule = document.getElementById('divDiscModule');
+var score = document.getElementsByClassName('score');
 
 function init_tableJS(int, intDeux) {
 	table = []
@@ -72,7 +72,7 @@ function discSet(i, j) {
 			if (playerTurn)	
 			{
 				divDisc[j * intDeux + index - 1].style.backgroundPosition = "0px -"+(600 * parseInt(divDisc[j * intDeux + index - 1].style.height) / 100)+"px";
-				setTimeout(function(){ divDisc[j * intDeux + index - 1].style.backgroundImage = "url('"+playerOne+"')"; divDisc[j * intDeux + index - 1].style.backgroundPosition = "0px 0px"; divDisc[j * intDeux + index - 1].style.transitionDuration = "0.2s"; soundOne.play();}, (200 * (index-1)));
+				setTimeout(function(){ divDisc[j * intDeux + index - 1].style.backgroundImage = "url('"+playerOne+"')"; divDisc[j * intDeux + index - 1].style.backgroundPosition = "0px 0px"; divDisc[j * intDeux + index - 1].style.transitionDuration = "0.2s"; soundOne.load();  soundOne.play();}, (200 * (index-1)));
 				tableGame[i + index - 1][j] = 2;
 				slideDown(index - 1, j, playerOne)
 				turnPlay();
@@ -81,7 +81,7 @@ function discSet(i, j) {
 			else
 			{
 				divDisc[j * intDeux + index - 1].style.backgroundPosition = "0px -"+(600 * parseInt(divDisc[j * intDeux + index - 1].style.height) / 100)+"px";
-				setTimeout(function(){ divDisc[j * intDeux + index - 1].style.backgroundImage = "url('"+playerTwo+"')";  divDisc[j * intDeux + index - 1].style.backgroundPosition = "0px 0px"; divDisc[j * intDeux + index - 1].style.transitionDuration = "0.2s"; soundTwo.play();}, (200 * (index-1)));
+				setTimeout(function(){ divDisc[j * intDeux + index - 1].style.backgroundImage = "url('"+playerTwo+"')";  divDisc[j * intDeux + index - 1].style.backgroundPosition = "0px 0px"; divDisc[j * intDeux + index - 1].style.transitionDuration = "0.2s"; soundTwo.load(); soundTwo.play();}, (200 * (index-1)));
 				tableGame[i + index - 1][j] = 1;
 				slideDown(index - 1, j, playerTwo);
 				turnPlay();
@@ -160,9 +160,7 @@ function resolution(tableGame) {
 	}
 	countPlay++;
 	if (countPlay == (int * intDeux))
-	{
 		matchNull();
-	}
 }
 
 function matchNull()
@@ -170,6 +168,7 @@ function matchNull()
 	var sound = document.getElementById('pokeBattle');
 	sound.pause();
 	var soundResult = document.getElementById('matchNull');
+	soundResult.load();
 	soundResult.play();
 	var resultat = document.getElementById('egal');
 	resultat.style.display = "flex";
@@ -180,6 +179,7 @@ function winLose(playerWin)
 	var sound = document.getElementById('pokeBattle');
 	sound.pause();
 	var soundResult = document.getElementById('victory');
+	soundResult.load();
 	soundResult.play();
 	var resultat = document.getElementById('result');
 	result.style.display = "flex";
@@ -194,6 +194,7 @@ function winLose(playerWin)
 		divRes[0].style.backgroundColor = "rgba(225, 38, 38, 0.5)";
 		lose.style.backgroundImage = "url('"+playerTwo+"')";
 		divRes[1].style.backgroundColor = "rgba(38, 38, 225, 0.5)";
+		score[0].innerHTML = parseInt(score[0].innerHTML) + 1;
 	}
 	else {
 		resuP[0].innerHTML = "Joueur 2 Win";
@@ -202,7 +203,37 @@ function winLose(playerWin)
 		divRes[0].style.backgroundColor = "rgba(38, 38, 225, 0.5)";
 		lose.style.backgroundImage = "url('"+playerOne+"')";
 		divRes[1].style.backgroundColor = "rgba(225, 38, 38, 0.5)";
+		score[1].innerHTML = parseInt(score[1].innerHTML) + 1;
 	}
+	setTimeout(function(){
+		replay();
+	}, 5000);
+}
+
+function replay() {
+	var replayDiv = document.getElementById('replay');
+	replayDiv.style.display = "flex";
+	var replayButton = document.getElementById('replayButton');
+	replayButton.addEventListener("click", resetBoard());
+}
+
+function resetBoard(){
+	int = parseInt(prompt("Enter number of COLUMNS/LINE"));
+	intDeux = int;
+	tableGame = init_tableJS(int, intDeux);
+	playerOne = 0;
+	playerTwo = 0;
+	playerTurn = 0;
+	var replayDiv = document.getElementById('replay');
+	replayDiv.style.display = "none";
+	var resultat = document.getElementById('result');
+	result.style.display = "none";
+	var soundResult = document.getElementById('victory');
+	soundResult.pause();
+	var sound = document.getElementById('opening');
+	sound.load();
+	sound.play();
+	playGame();
 }
 
 function resHorizon(tableGame, i, j, valTab) {
@@ -268,6 +299,7 @@ function playGame() {
 			chooseBlock.style.display = "flex";
 			opening.pause();
 			var audio = document.getElementById('chooseSound');
+			audio.load();
 			audio.play();
 			setDisc(playerOne, playerTwo);
 		}
@@ -279,9 +311,11 @@ function setDisc(playerOne, playerTwo) {
 	for (var i = 0; i < choice.length; i++) {
 		(function(index, playerOne, playerTwo){
 			choice[index].addEventListener("click", function() {
+				select.load();
 				select.play();
 				setTimeout(function(){
 					logoPlayer(choice[index], pokeSound[index]);
+					pokeSound[index].load();
 					pokeSound[index].play();
 				},500);
 			})
@@ -315,6 +349,7 @@ function logoPlayer(choice, pokeSound) {
 		setTimeout(function(){ player.innerHTML = "0"; }, 3000);
 		setTimeout(function(){ encountStart(); }, 3000);
 		setTimeout(function(){var audio = document.getElementById('pokeBattle');
+		audio.load();
 		audio.play(); audio.loop = "true";}, 2200)
 		setTimeout(function(){chooseSound = document.getElementById('chooseSound'); chooseSound.pause();}, 3200);
 	}
