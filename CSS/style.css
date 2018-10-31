@@ -309,7 +309,7 @@ audio {
 	font-size: 4vw;
 	color: #EAF20B;
 	border-radius: 25px;
-	background-color: #E12626;
+	background-color: rgba(225, 38, 38, 0.5);
 }
 
 #choose img {

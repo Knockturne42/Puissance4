@@ -360,7 +360,7 @@ function logoPlayer(choice, pokeSound) {
 		var playerOneDivImg = document.getElementById('playerOneImg');
 		playerOneDivImg.style.backgroundImage = "url('"+playerOne+"')";
 		player.innerHTML = "Joueur 2";
-		player.style.backgroundColor = "#1B21E9"
+		player.style.backgroundColor = "rgba(27, 33, 233, 0.5)"
 		choice.style.border = "1px solid rgb(225, 38, 38)";
 		choice.style.backgroundColor = "rgba(225, 38, 38, 0.5)";
 	}
@@ -380,10 +380,10 @@ function logoPlayer(choice, pokeSound) {
 			choice[i].style.backgroundColor = "rgba(0, 0, 0, 0)";
 		}}, 5500);
 		player.innerHTML = "3";
-		player.style.backgroundColor = "#454bed";
-		setTimeout(function(){ player.innerHTML = "2"; player.style.backgroundColor = "#7478f1";}, 1000);
-		setTimeout(function(){ player.innerHTML = "1"; player.style.backgroundColor = "#a2a5f6"; }, 2000);
-		setTimeout(function(){ player.innerHTML = "0"; player.style.backgroundColor = "#d1d2fa"; }, 3000);
+		player.style.backgroundColor = "rgba(69, 75, 237, 0.5)";
+		setTimeout(function(){ player.innerHTML = "2"; player.style.backgroundColor = "rgba(116, 120, 241, 0.5)";}, 1000);
+		setTimeout(function(){ player.innerHTML = "1"; player.style.backgroundColor = "rgba(162, 165, 246, 0.5)"; }, 2000);
+		setTimeout(function(){ player.innerHTML = "0"; player.style.backgroundColor = "rgba(209, 210, 250, 0.5)"; }, 3000);
 		setTimeout(function(){ encountStart(); }, 3000);
 		setTimeout(function(){var audio = document.getElementById('pokeBattle');
 		audio.play(); audio.loop = "true";}, 2200)
