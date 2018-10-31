@@ -354,6 +354,7 @@ function setDisc(playerOne, playerTwo) {
 function logoPlayer(choice, pokeSound) {
 	if (!playerOne)
 	{
+		player.style.transitionDuration = "1s";
 		playerOne = choice.src;
 		soundOne = pokeSound;
 		var playerOneDivImg = document.getElementById('playerOneImg');
@@ -375,11 +376,11 @@ function logoPlayer(choice, pokeSound) {
 		for (var i = 0; i < choice.length; i++) {
 			choice[i].style.backgroundColor = "rgba(0, 0, 0, 0)";
 		}}, 5500);
-		player.style.backgroundColor = "black";
 		player.innerHTML = "3";
-		setTimeout(function(){ player.innerHTML = "2"; }, 1000);
-		setTimeout(function(){ player.innerHTML = "1"; }, 2000);
-		setTimeout(function(){ player.innerHTML = "0"; }, 3000);
+		player.style.backgroundColor = "#454bed";
+		setTimeout(function(){ player.innerHTML = "2"; player.style.backgroundColor = "#7478f1";}, 1000);
+		setTimeout(function(){ player.innerHTML = "1"; player.style.backgroundColor = "#a2a5f6"; }, 2000);
+		setTimeout(function(){ player.innerHTML = "0"; player.style.backgroundColor = "#d1d2fa"; }, 3000);
 		setTimeout(function(){ encountStart(); }, 3000);
 		setTimeout(function(){var audio = document.getElementById('pokeBattle');
 		audio.play(); audio.loop = "true";}, 2200)
@@ -408,13 +409,13 @@ function encountStart() {
 	encountDiv.style.display = "flex";
 	encountFlash();
 	encountAction();
-	setTimeout(function(){ encountDiv.style.display = "none";}, 3600);
-	setTimeout(function(){ turnPlay(); init_table();}, 3600);
+	setTimeout(function(){ encountDiv.style.display = "none";}, 2600);
+	setTimeout(function(){ turnPlay(); init_table();}, 2600);
 	setTimeout(function() {
 		for (var i = 0; i < encounter.length; i++) {
 			encounter[i].style.backgroundColor = "rgba(0, 0, 0, 0)";
 		}
-	}, 3600)
+	}, 2600)
 }
 
 function encountFlash() {
