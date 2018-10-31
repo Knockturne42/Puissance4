@@ -21,6 +21,7 @@ var shadow = document.getElementsByClassName('shadowPlayers');
 var tableCol = document.getElementsByClassName('tableCol');
 var select = document.getElementById('select');
 var count = 0;
+var countPlay = 0;
 // var divDiscModule = document.getElementById('divDiscModule');
 
 function init_tableJS(int, intDeux) {
@@ -59,8 +60,6 @@ function createDiv(tableCol, int, num)
 	}
 }
 
-createCol(int, intDeux);
-
 function discSet(i, j) {
 	return function(){
 		var index = 0;
@@ -72,7 +71,8 @@ function discSet(i, j) {
 			setTimeout(function(){ pause.style.display = "none";}, (index-1) * 200);
 			if (playerTurn)	
 			{
-				setTimeout(function(){ divDisc[j * intDeux + index - 1].style.backgroundImage = "url('"+playerOne+"')"; divDisc[j * intDeux + index - 1].style.backgroundPosition = "0px 0px"; divDisc[j * intDeux + index - 1].style.transitionDuration = "0.4s"; soundOne.play();}, (200 * (index-1)));
+				divDisc[j * intDeux + index - 1].style.backgroundPosition = "0px -"+(600 * parseInt(divDisc[j * intDeux + index - 1].style.height) / 100)+"px";
+				setTimeout(function(){ divDisc[j * intDeux + index - 1].style.backgroundImage = "url('"+playerOne+"')"; divDisc[j * intDeux + index - 1].style.backgroundPosition = "0px 0px"; divDisc[j * intDeux + index - 1].style.transitionDuration = "0.2s"; soundOne.play();}, (200 * (index-1)));
 				tableGame[i + index - 1][j] = 2;
 				slideDown(index - 1, j, playerOne)
 				turnPlay();
@@ -80,7 +80,8 @@ function discSet(i, j) {
 			}
 			else
 			{
-				setTimeout(function(){ divDisc[j * intDeux + index - 1].style.backgroundImage = "url('"+playerTwo+"')";  divDisc[j * intDeux + index - 1].style.backgroundPosition = "0px 0px"; divDisc[j * intDeux + index - 1].style.transitionDuration = "0.4s"; soundTwo.play();}, (200 * (index-1)));
+				divDisc[j * intDeux + index - 1].style.backgroundPosition = "0px -"+(600 * parseInt(divDisc[j * intDeux + index - 1].style.height) / 100)+"px";
+				setTimeout(function(){ divDisc[j * intDeux + index - 1].style.backgroundImage = "url('"+playerTwo+"')";  divDisc[j * intDeux + index - 1].style.backgroundPosition = "0px 0px"; divDisc[j * intDeux + index - 1].style.transitionDuration = "0.2s"; soundTwo.play();}, (200 * (index-1)));
 				tableGame[i + index - 1][j] = 1;
 				slideDown(index - 1, j, playerTwo);
 				turnPlay();
@@ -103,11 +104,12 @@ function slideDown(i, j, player) {
 }
 
 function effectSlide(myDisc, player, i) {
+	myDisc.style.backgroundPosition = "0px -"+(600 * parseInt(myDisc.style.height) / 100)+"px";
 	myDisc.style.backgroundImage = "url('"+player+"')";
-	setTimeout(function(){ setTimeout(function(){ myDisc.style.backgroundPosition = "0px 60px";
+	setTimeout(function(){ setTimeout(function(){ myDisc.style.backgroundPosition = "0px "+(600 * parseInt(myDisc.style.height) / 100)+"px";
 	myDisc.style.transitionDuration = "0.4s"; }, 200 * i); }, 1);
 	setTimeout(function(){ myDisc.style.backgroundImage = "";
-	myDisc.style.transitionDuration = "0s"; myDisc.style.backgroundPosition = "0px -60px";}, (200 * i + 201));
+	myDisc.style.transitionDuration = "0s"; myDisc.style.backgroundPosition = "0px -"+(600 * parseInt(myDisc.style.height) / 100)+"px";}, (200 * i + 201));
 
 }
 
@@ -156,6 +158,21 @@ function resolution(tableGame) {
 			}
 		}
 	}
+	countPlay++;
+	if (countPlay == (int * intDeux))
+	{
+		matchNull();
+	}
+}
+
+function matchNull()
+{
+	var sound = document.getElementById('pokeBattle');
+	sound.pause();
+	var soundResult = document.getElementById('matchNull');
+	soundResult.play();
+	var resultat = document.getElementById('egal');
+	resultat.style.display = "flex";
 }
 
 function winLose(playerWin)
@@ -245,6 +262,7 @@ function resDiagoTwo(tableGame, i, j, valTab) {
 }
 
 function playGame() {
+	createCol(int, intDeux);
 	playButton.addEventListener("click", function(){
 		if (!playerOne) {
 			chooseBlock.style.display = "flex";
