@@ -102,6 +102,7 @@ main {
 	height: 250px;
 	transition-duration: 0.5s;
 	border-radius: 25px;
+	border: 1px solid rgba(0, 0, 0, 0.9);
 }
 
 .divPlayers p {
@@ -117,11 +118,13 @@ main {
 	border-radius: 25px;
 }
 #playerOne {
-	background-color: #E12626;
+	background-color: rgba(225, 38, 38, 0.5);
+	border: 1px solid rgb(225, 38, 38, 0);
 }
 
 #playerTwo {
-	background-color: #1B21E9;
+	background-color: rgba(27, 33, 233, 0.5);
+	border: 1px solid rgba(27, 33, 233, 0.5);
 }
 
 #playerOneImg, #playerTwoImg {
@@ -311,8 +314,10 @@ audio {
 
 #choose img {
 	border: 1px solid rgba(0, 0, 0, 0);
+	background-color: rgba(0, 0, 0, 0);
 	width: 19%;
 	height: 19%;
 	margin: auto;
 	border-radius: 25px;
+	transition-duration: 1s;
 }

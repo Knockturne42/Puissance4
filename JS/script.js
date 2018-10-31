@@ -361,7 +361,8 @@ function logoPlayer(choice, pokeSound) {
 		playerOneDivImg.style.backgroundImage = "url('"+playerOne+"')";
 		player.innerHTML = "Joueur 2";
 		player.style.backgroundColor = "#1B21E9"
-		choice.style.backgroundColor = "#E12626";
+		choice.style.border = "1px solid rgb(225, 38, 38)";
+		choice.style.backgroundColor = "rgba(225, 38, 38, 0.5)";
 	}
 	else if (!playerTwo && playerOne != choice.src)
 	{
@@ -370,10 +371,12 @@ function logoPlayer(choice, pokeSound) {
 		var playerTwoDivImg = document.getElementById('playerTwoImg');
 		playerTwoDivImg.style.backgroundImage = "url('"+playerTwo+"')";
 		var playerOneDivImg = document.getElementById('playerOneImg');
-		choice.style.backgroundColor = "#1B21E9";
+		choice.style.border = "1px solid rgb(27, 33, 233)";
+		choice.style.backgroundColor = "rgba(27, 33, 233, 0.5)";
 		setTimeout(function(){ chooseBlock.style.display = "none"; player.innerHTML = "Joueur 1"; player.style.backgroundColor = "#E12626"}, 5500);
 		setTimeout(function(){choice = document.getElementsByClassName('discChoose');
 		for (var i = 0; i < choice.length; i++) {
+			choice[i].style.border = "1px solid rgba(0, 0, 0, 0)";
 			choice[i].style.backgroundColor = "rgba(0, 0, 0, 0)";
 		}}, 5500);
 		player.innerHTML = "3";
